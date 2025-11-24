@@ -1,3 +1,5 @@
+#define BUFFER_SIZE 32
+
 int powOfTwo(int num);
 void reverseMasChar(char* mas, char* newmas, int n);
 void toBinary(int num, char* bin_num);

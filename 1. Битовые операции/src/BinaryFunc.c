@@ -4,7 +4,7 @@ int powOfTwo(int num){
 	int pow=0;
 	int sign = 0;
 	if(num<0){
-		return 32;
+		return BUFFER_SIZE;
 	}
 	
 	int num_saved = num;

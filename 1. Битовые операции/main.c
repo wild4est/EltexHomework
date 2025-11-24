@@ -7,7 +7,7 @@ int main(){
 	int num_pos;
 	scanf("%d", &num_pos);
 	
-	char bin_num[34];
+	char bin_num[BUFFER_SIZE];
 	toBinary(num_pos, bin_num);
 	
 	printf("Двоичное представление числа %d : %s\n", num_pos, bin_num);
@@ -17,7 +17,7 @@ int main(){
 	int num_neg;
 	scanf("%d", &num_neg);
 
-	char bin_num_neg[34];
+	char bin_num_neg[BUFFER_SIZE];
 	toBinary(num_neg, bin_num_neg);
 
 	printf("Двоичное представление числа %d : %s\n", num_neg, bin_num_neg);
