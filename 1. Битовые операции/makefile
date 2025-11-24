@@ -23,7 +23,7 @@ obj/main.o: main.c
 
 clean:
 	rm -rf main obj/*.o obj
-	rm run_test
+	rm -f run_test
 
 run_test:
 	$(CC) test/BinaryFunc_test.c src/BinaryFunc.c test/unity.c -o run_test
