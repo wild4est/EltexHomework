@@ -24,6 +24,7 @@ int main(){
 	int triangular_matrix[N][M];
 	FillTriangularMatrix(&triangular_matrix[0][0], N, M);
 	PrintMatrix(&triangular_matrix[0][0], N, M);
+	printf("\n");
 
 	printf("4. Заполнить матрицу числами от 1 до N2 улиткой.\n");
 	int snail_matrix[N][M];
