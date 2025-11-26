@@ -1,6 +1,6 @@
 #include "BinaryFunc.h"
 
-int powOfTwo(int num){
+int PowOfTwo(int num){
 	int pow=0;
 	int sign = 0;
 	if(num<0){
@@ -15,20 +15,20 @@ int powOfTwo(int num){
 	return pow;
 }
 
-void reverseMasChar(char* mas, char* newmas, int n){
+void ReverseMasChar(char* mas, char* newmas, int n){
 	for(int i=0; i<n; i++){
 		newmas[i] = mas[n-1-i];
 	}
 }
 
-void toBinary(int num, char* bin_num){
+void IntToBinary(int num, char* bin_num){
 	int num_saved = num;
 	int num_is_neg = num<0;
 	int sign = 0;
 	if(num_is_neg){
 		sign = 0xFFFFFFFF;
 	}
-	int size_of_binnum = powOfTwo(num_saved);
+	int size_of_binnum = PowOfTwo(num_saved);
 
 	char rev_bin_num[size_of_binnum];
 	
@@ -49,13 +49,13 @@ void toBinary(int num, char* bin_num){
 		}
 	}
 
-	reverseMasChar(rev_bin_num, bin_num, size_of_binnum);
+	ReverseMasChar(rev_bin_num, bin_num, size_of_binnum);
 	
 	bin_num[size_of_binnum] = '\0';
 }
 
 
-int countBits(int num){
+int CountBits(int num){
 	int count = 0;
 
 	while(num!=0){
@@ -67,7 +67,7 @@ int countBits(int num){
 	return count;	
 }
 
-int replaceThirdByte(int num_original, unsigned char num_replaced){
+int ReplaceThirdByte(int num_original, unsigned char num_replaced){
 	int num_original_saved = num_original;
 	int num_replaced_saved = num_replaced;
 
