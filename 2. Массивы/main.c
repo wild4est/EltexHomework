@@ -1,6 +1,6 @@
 #include "src/ArrayFunc.h"
 
-#define N 5
+#define N 4
 #define M 4
 
 

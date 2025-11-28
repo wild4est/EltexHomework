@@ -23,4 +23,7 @@ obj/main.o: main.c
 
 clean:
 	rm -rf main obj/*.o obj
+	rm -f run_test
 
+run_test:
+	$(CC) test/ArrayFunc_test.c src/ArrayFunc.c ../Unity/unity.c -o run_test
