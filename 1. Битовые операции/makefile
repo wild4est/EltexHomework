@@ -26,5 +26,5 @@ clean:
 	rm -f run_test
 
 run_test:
-	$(CC) test/BinaryFunc_test.c src/BinaryFunc.c test/unity.c -o run_test
+	$(CC) test/BinaryFunc_test.c src/BinaryFunc.c ../Unity/unity.c -o run_test
 

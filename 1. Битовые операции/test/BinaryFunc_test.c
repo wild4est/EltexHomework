@@ -1,4 +1,4 @@
-#include "unity.h"
+#include "../../Unity/unity.h"
 #include "../src/BinaryFunc.h"
 
 void setUp(void) {
