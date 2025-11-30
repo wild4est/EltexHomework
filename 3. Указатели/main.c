@@ -43,8 +43,8 @@ int main(){
 	char pattern[50];
 	scanf("%49s", pattern);
 
-	int text_size = strlen(text);
-	int pattern_size = strlen(pattern);
+	int text_size = GetStringSize(text);
+	int pattern_size = GetStringSize(pattern);
 	const char* point_substring = BitapAlgorithm(text, pattern, text_size, pattern_size);
 	printf("Найденная подстрока: \n");
 	PrintArrayChar(point_substring, pattern_size);

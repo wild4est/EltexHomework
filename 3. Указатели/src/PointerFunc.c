@@ -41,6 +41,16 @@ void PrintArrayChar(const char* array, int n){
 	printf("\n");
 }
 
+int GetStringSize(const char* str){
+	int size=0;
+	while(*str != '\0'){
+		size++;
+		str++;
+	}
+	return size;
+
+}
+
 const char* BitapAlgorithm(const char* text, const char* pattern, int text_size, int pattern_size){
 	int alphabet_mask_size = 127;
 	
