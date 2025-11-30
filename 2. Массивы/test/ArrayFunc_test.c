@@ -1,15 +1,6 @@
 #include "../src/ArrayFunc.h"
 #include "../../Unity/unity.h"
 
-/*
-void FillMatrix(int* matrix, int N, int M);
-void FillTriangularMatrix(int* matrix, int N, int M);
-void Swap(int* a, int* b);
-void FillArray(int* array, int N);
-void ReverseArray(int* array, int N);
-void FillSnailMatrix(int* matrix, int N, int M);
-void FillZeroMatrix(int* matrix, int N, int M);*/
-
 void setUp(void){
 
 }
