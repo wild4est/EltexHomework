@@ -1,10 +1,10 @@
 #include "UIFunc.h"
 
-void AlternativeScreenOn(){
+void AlternateScreenOn(){
 	printf("\033[?1049h\033[H");
 }
 
-void AlternativeScreenOff(){
+void AlternateScreenOff(){
 	printf("\033[?1049l");
 }
 
@@ -158,7 +158,7 @@ void MainScreen(){
 	struct vector vec;
 	InitVector(&vec);
 
-	AlternativeScreenOn();
+	AlternateScreenOn();
 
 	int get;
 	int page = 0;
@@ -170,5 +170,5 @@ void MainScreen(){
 		Output(get, &page, &vec);
 	} while (get != EXIT);
 
-	AlternativeScreenOff();
+	AlternateScreenOff();
 }
