@@ -4,7 +4,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define QUEUE_FCTS "/queue_fcts" //from client to server
-#define QUEUE_FSTC "/queue_fstc" //from server to client
-#define SIZE_BUFF 10
-#define SIZE_NAME 10
+#define QUEUE_NEW_CLIENT "/queue_new_client"
+#define QUEUE_MSG "/queue_msg"
+#define QUEUE_BROADCAST "/queue_broadcast"
+
+#define SIZE_NAME_BUFF 30
+#define SIZE_MSG_BUFF 256
+//#define SIZE_BUFF 10
+//#define SIZE_NAME 10
