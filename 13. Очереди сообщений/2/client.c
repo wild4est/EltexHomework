@@ -1,4 +1,5 @@
 #include "ServerStuff.h"
+#include <ncurses.h>
 
 struct Client{
 	int msg_count;
@@ -26,6 +27,6 @@ void main(int argc, char* argv[]){
 
 	mqd_t queue_for_messaging = mq_open(QUEUE_MSG, O_WRONLY);
 	mqd_t queue_for_broadcast = mq_open(QUEUE_BROADCAST, O_RDONLY);
-
+	WINDOW* 
 
 }

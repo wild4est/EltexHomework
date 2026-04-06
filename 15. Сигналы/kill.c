@@ -6,7 +6,7 @@
 int IsNum(char* str){
 	int i = 0;
 	while(str[i] != '\0'){
-		if (48 >= str[i] && str[i] <= 57){
+		if ( str[i] < '0' || '9' < str[i]){
 			return 0;
 		}
 		i++;
