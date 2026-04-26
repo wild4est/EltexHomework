@@ -1,4 +1,7 @@
 #include "ServerStuff.h"
+#include <arpa/inet.h>
+
+#define MULTICAST_ADDR "124.0.0.1"
 
 void main(){
 	int fd;
@@ -6,6 +9,12 @@ void main(){
 		printf("Не удалось создать файловый дескриптор\n");
 		return;
 	}
+	struct ip_mreqn mreqn;
+        mreqn.imr_multiaddr.s_addr = inet_addr(MULTICAST_ADDR);
+        mreqn.imr_address.s_addr = INADDR_ANY;
+        mreqn.imr_ifindex = 0;
+
+	setsockopt(fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mreqn, sizeof(mreqn));
 
 	struct sockaddr_in addr;
         addr.sin_family = AF_INET;
@@ -18,7 +27,9 @@ void main(){
                 return;
         }
 	printf("Клиент забиндил порт %d\n", PORT);
-	
+
+
+
 	char buff[SIZE_BUFF];
 	if (recvfrom(fd, buff, sizeof(buff), 0, (struct sockaddr *)&addr, &len_addr) < 0) {
 		printf("Не удалось принять сообщение\n");
