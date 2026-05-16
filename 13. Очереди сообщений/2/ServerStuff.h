@@ -1,14 +1,11 @@
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <mqueue.h>
-#include <stdlib.h>
-#include <stdio.h>
-
 #define QUEUE_NEW_CLIENT "/queue_new_client"
-#define QUEUE_MSG "/queue_msg"
+#define QUEUE_MESSAGING "/queue_messaging"
 #define QUEUE_BROADCAST "/queue_broadcast"
+#define QUEUE_EXIT "/queue_exit"
 
-#define SIZE_NAME_BUFF 30
-#define SIZE_MSG_BUFF 256
-//#define SIZE_BUFF 10
-//#define SIZE_NAME 10
+#define SIZE_BUFF_NAME 15
+#define SIZE_BUFF_MSG 50
+
+#define ANSWER_GOOD "good"
+#define ANSWER_ERROR "error"
+#define ANSWER_END "всё!"
