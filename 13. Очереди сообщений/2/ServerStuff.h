@@ -4,7 +4,7 @@
 #define QUEUE_EXIT "/queue_exit"
 
 #define SIZE_BUFF_NAME 15
-#define SIZE_BUFF_MSG 50
+#define SIZE_BUFF_MSG 256
 
 #define ANSWER_GOOD "good"
 #define ANSWER_ERROR "error"
