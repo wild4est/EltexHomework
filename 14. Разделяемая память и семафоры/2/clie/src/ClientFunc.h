@@ -5,7 +5,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include <pthread.h>
-//#include <mqueue.h>
 #include <ncurses.h>
 #include <unistd.h>
 #include <errno.h> 
@@ -15,11 +14,15 @@
 #include "List.h"
 #include "../../ServerStuff.h"
 
-#define CLIENT_NAME "Cow"
-#define CLIENT_MSG "Moo"
-
 #define MSG_COUNT 10
 
+/*!
+ * \brief Структура разделяемой памяти, эмулирующая поведение очереди, состоящей из одного сообщения
+ * \param int shm - файловый дескриптор разделяемой памяти
+ * \param void* ptr - указатель на область разделяемой памяти
+ * \param sem_t* sem_read - семафор на чтение разделяемой памяти
+ * \param sem_t* sem_write - семафор на запись разделяемой памяти
+ */
 struct SharedMemory{
         int shm;
         void* ptr;
@@ -27,25 +30,18 @@ struct SharedMemory{
         sem_t* sem_write;
 };
 
+/*!
+ * \brief Структура клиента
+ * \param char* name - имя клиента
+ * \param struct SharedMemory shared_mem_messaging - 
+ * \param struct SharedMemory shared_mem_personal - 
+ * \param struct SharedMemory shared_mem_exit
+ * \param struct List* list_clients - указатель на список имён пользователей
+ * \param struct List* list_msg - указатель на список последних сообщений
+ */
 struct Client{
 	char* name;
-	//mqd_t mqd_messaging;
-	//mqd_t mqd_personal;
-	//mqd_t mqd_exit;
 	
-	/*sem_t* sem_messaging;
-        sem_t* sem_personal;
-        sem_t* sem_exit;
-
-        int shm_messaging;
-        int shm_personal;
-        int shm_exit;
-
-        void* ptr_messaging;
-        void* ptr_personal;
-        void* ptr_exit;
-	*/
-
 	struct SharedMemory shared_mem_messaging;
 	struct SharedMemory shared_mem_personal;
 	struct SharedMemory shared_mem_exit;
@@ -54,14 +50,62 @@ struct Client{
 	struct List* list_msgs;
 };
 
-//int InitQueue(mqd_t* mqd, const char* path, long maxmsg, long msgsize, int oflag);
+/*!
+ * \brief Функция инициализации разделяемой памяти
+ * \param int* shm_fd - указатель на файловый дескриптор 
+ * \param void** ptr - указатель на участок разделяемой памяти
+ * \param const char* name - название раздляемой памяти 
+ * \param int oflag - флаги
+ * \param size_t size - размер памяти
+ */
 int InitShm(int* shm_fd, void** ptr, const char* name,int oflag, size_t size);
+
+/*!
+ * \brief Функция закрытия разделяемой памяти
+ * \param struct SharedMemory* shared_mem - структура разделяемой памяти
+ */
+
 void CloseSharedMemory(struct SharedMemory* shared_mem);
+
+/*!
+ * \brief Функция удаление разделяемой памяти
+ * \param char* name_shm - имя разделяемой памяти, которую необходимо удалить
+ * \param char* name_sem_rd - имя семафора на чтение, который необходимо удалить
+ * \param char* name_sem_wr - имя семафора на запись, который необходимо удалить
+ */
 void UnlinkSharedMemory(char* name_shm, char* name_sem_rd, char* name_sem_wr);
 
+/*!
+ * \brief Функция инициализации структуры клиента
+ * \param char* name - имя клиента
+ */
 struct Client* InitClient(char* name);
+
+/*!
+ * \brief Функция отправки сообщения серверу
+ * \param struct SharedMemory* shared_mem - указатель на структуру разделяемой памяти, по которой необходимо отправить
+ * сообщение
+ * \param char* name - имя клиета
+ * \param char* msg - сообщение
+ */
 int SendMsgToServer(struct SharedMemory* shared_mem, char* name, char* msg);
+
+/*!
+ * \brief Функция принятия сообщения от сервера
+ * \param struct SharedMemory* shared_mem - указатель на структуру разделяемой памяти, по которой необходиом получить
+ * сообщение
+ * \param struct List** list_msg - список сообщений
+ * \param struct List** list_clients - список клиентов
+ * \detail Если принятое сообщение начинается на '+', то клиент считает, что получил имя только что присоединившего
+ * пользователя, и добавляет его в список клиентов. Если принятое сообщение начинается на '-', то клиент считает,
+ * что он получил имя пользователя, который покинул чат, и удаляет его из списка клиентов. Во всех остальных случаях
+ * клиент считает, что он получил обычное сообщение и записывает его в список сообщений.
+ */
 int GetMsgFromServer(struct SharedMemory* shared_mem, struct List** list_msgs, struct List** list_clients);
+
+/*!
+ * \brief Функция принятия данных от сервера
+ * \param struct Client* client - структура клиента
+ * \detail В данной функции клиент получает данные от сервера о других клиентах и уже имеющихся сообщениях на сервере
+ */
 int GetDataFromServer(struct Client* client);
-//void* MessagingListener(void* args);
-//void* BroadcastListener(void* args);

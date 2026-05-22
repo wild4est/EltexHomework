@@ -123,7 +123,7 @@ int GetMsgFromServer(struct SharedMemory* shared_mem, struct List** list_msgs, s
 		DeleteNode(*list_clients, msg);
 	}else{
 		if ((*list_msgs)->length >= MSG_COUNT) {
-			DeleteNode(*list_msgs, (*list_msgs)->start->msg);
+			DeleteNode(*list_msgs, (*list_msgs)->start->data);
 		}
 		AddNode(*list_msgs, msg);
 	}

@@ -90,18 +90,6 @@ struct ListClient* InitListClient(){
 	return list_client;
 }
 
-int ListContainsClient(struct ListClient* list_client, char* name){
-	struct NodeClient* cur_node = list_client->start;
-	while(cur_node != NULL){
-		if (strcmp(cur_node->name, name) == 0) {
-			return 1;
-		}
-		cur_node = cur_node->next;
-	}
-
-	return 0;
-}
-
 void AddNodeClient(struct ListClient* list_client, char* name, struct SharedMemory shared_mem){
 	struct NodeClient** cur_node = &(list_client->start);
 	while(*cur_node != NULL){

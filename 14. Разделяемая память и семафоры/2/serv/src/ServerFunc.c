@@ -117,12 +117,6 @@ void* NewClientListener(void* args){
                         SendMsgToClient(&shared_mem_client, ANSWER_ERROR);
                         continue;
                 }
-
-		if (ListContainsClient(serv->list_clients, name)) {
-			printf("[X] Пользователь[%s] не был принят, так как такой никнейм занят\n", name);
-                        SendMsgToClient(&shared_mem_client, ANSWER_ERROR);
-                        continue;
-		}
 		
 		char msg[SIZE_BUFF_NAME+1];
 		sprintf(msg, "+%s", name);
