@@ -22,7 +22,6 @@ struct Server* InitServer(){
         serv->list_msgs = InitListMsg();
         InitQueue(&(serv->mqd_new_clients), QUEUE_NEW_CLIENT, MAX_COUNT_MSGS, SIZE_BUFF_NAME, O_RDONLY);
         InitQueue(&(serv->mqd_messaging), QUEUE_MESSAGING, MAX_COUNT_MSGS, SIZE_BUFF_MSG, O_RDONLY);
-        InitQueue(&(serv->mqd_broadcast), QUEUE_BROADCAST, MAX_COUNT_MSGS, SIZE_BUFF_MSG, O_WRONLY);
         InitQueue(&(serv->mqd_exit), QUEUE_EXIT, MAX_COUNT_MSGS, SIZE_BUFF_NAME, O_RDONLY);
 
 	printf("[!] Сервер поднят\n");
@@ -96,12 +95,6 @@ void* NewClientListener(void* args){
                         SendMsgToClient(mqd_client, ANSWER_ERROR);
                         continue;
                 }
-
-		if (ListContainsClient(serv->list_clients, name)) {
-			printf("[X] Пользователь[%s] не был принят, так как такой никнейм занят\n", name);
-                        SendMsgToClient(mqd_client, ANSWER_ERROR);
-                        continue;
-		}
 
 		char msg[SIZE_BUFF_NAME+1];
 		sprintf(msg, "+%s", name);

@@ -106,7 +106,7 @@ int GetMsgFromServer(mqd_t mqd_personal, struct List** list_msgs, struct List** 
 		DeleteNode(*list_clients, msg);
 	}else{
 		if ((*list_msgs)->length >= MSG_COUNT) {
-			DeleteNode(*list_msgs, (*list_msgs)->start->msg);
+			DeleteNode(*list_msgs, (*list_msgs)->start->data);
 		}
 		AddNode(*list_msgs, msg);
 	}

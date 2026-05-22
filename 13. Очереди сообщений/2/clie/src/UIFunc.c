@@ -30,7 +30,7 @@ void PrintList(WINDOW* win, struct List* list){
 	int i = 1;
 	struct Node* node = list->start;
 	while(node != NULL){
-		mvwprintw(win, i, 1, "%s\n", node->msg);
+		mvwprintw(win, i, 1, "%s\n", node->data);
 		i++;
 		node = node->next;
 	}

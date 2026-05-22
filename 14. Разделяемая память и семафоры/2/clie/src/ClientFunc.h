@@ -33,9 +33,10 @@ struct SharedMemory{
 /*!
  * \brief Структура клиента
  * \param char* name - имя клиента
- * \param struct SharedMemory shared_mem_messaging - 
- * \param struct SharedMemory shared_mem_personal - 
- * \param struct SharedMemory shared_mem_exit
+ * \param struct SharedMemory shared_mem_messaging - структура разделяемой памяти для отправки сообщений 
+ * \param struct SharedMemory shared_mem_personal - структура разделяемой памяти для получения индивидуальных
+ * сообщений
+ * \param struct SharedMemory shared_mem_exit - структура разделяемой памяти для отправки сообщений о выходе
  * \param struct List* list_clients - указатель на список имён пользователей
  * \param struct List* list_msg - указатель на список последних сообщений
  */

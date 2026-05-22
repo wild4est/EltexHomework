@@ -111,7 +111,7 @@ void AddNodeMsg(struct ListMsg* list_msg, char* msg);
 void DeleteNodeMsg(struct ListMsg* list_msg, char* msg);
 
 /*!
- * \brief Функция высвобождения списка сообщений
+ * \brief Функция очищающая список сообщений
  * \param struct ListMsg* list_msg - список сообщений
  */
 void FreeListMsg(struct ListMsg* list_msg);
@@ -138,7 +138,7 @@ void AddNodeClient(struct ListClient* list_client, char* name, struct SharedMemo
 void DeleteNodeClient(struct ListClient* list_client, char* name);
 
 /*!
- * \brief Функция высвобождения списка клиентов
+ * \brief Функция очищающая список клиентов
  * \param struct ListClient* list_client - список клиентов
  */
 void FreeListClient(struct ListClient* list_client);

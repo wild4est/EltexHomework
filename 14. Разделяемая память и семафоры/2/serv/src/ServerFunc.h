@@ -19,11 +19,11 @@
  * \brief Стуктура сервера
  * \param struct ListClient* list_clients - список клиентов
  * \param struct ListMsg* list_msg - список сообщений
- * \param struct SharedMemory shared_mem_new_client - структура разделяеой памяти для принятия сообщений, от тех,
- * кто хочет присоединится в чат
+ * \param struct SharedMemory shared_mem_new_client - структура разделяеой памяти для принятия запросов
+ * на принятие в чат
  * \param struct SharedMemory shared_mem_messaging - структура разделяемой памяти для принятия сообщений в чате
- * \param struct SharedMemory shared_mem_exit - структура разделяемой памяти для принятия сообщений от клиентов,
- * которые покинули чат
+ * \param struct SharedMemory shared_mem_exit - структура разделяемой памяти для принятия запросов от клиентов,
+ * которые желают покинуть чат
  */
 struct Server{
         struct ListClient* list_clients;
@@ -91,7 +91,7 @@ void* MessagingListener(void* args);
 /*!
  * \brief Функция, прослушивающая запросы на выход. Используется во время создания соотвествующего потока.
  * \param void* args - указатель на структуру сервера
- * \detail Функция ждёт, пока кто-то из пользователей не пришёл своё имя. Затем сервер удаляет данного пользователя
+ * \detail Функция ждёт, пока кто-то из пользователей не пришлёт своё имя. Затем сервер удаляет данного пользователя
  * из списка клиентов и сообщает всем оставшимся пользователям, что данный пользователь покинул чат. 
  */
 void* ExitListener(void* args);
