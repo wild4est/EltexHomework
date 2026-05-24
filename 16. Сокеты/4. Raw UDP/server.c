@@ -19,22 +19,8 @@ void main(){
 		return;
 	}
 
-	/*if (listen(fd, 3) < 0) {
-		printf("Не удалось прослушать\n");
-		close(fd);
-		return;
-	}*/
 	printf("Сервер поднят\n");
 
-	//int new_fd;
-	//socklen_t len_addr = sizeof(addr);
-	//if (new_fd = accept(fd, (struct sockaddr*)&addr, &len_addr) < 0) {
-	/*if ((new_fd = accept(fd, NULL, NULL)) < 0) {
-		printf("Не удалось создать новый файловый дескриптор\n");
-		close(fd);
-		return;
-	}*/
-	
 	char buff[SIZE_BUFF];
 	struct sockaddr_in client_addr;
 	socklen_t len_client_addr = sizeof(client_addr);

@@ -1,11 +1,5 @@
 #include "ServerStuff.h"
-
-#define SIZE_BUFF 64
-#define SIZE_DATA 10
-#define PORT_CLIENT 45289
-#define IP_ADDR "127.0.0.1"
-
-
+#include "ClientStuff.h"
 
 struct Packet_UDP{
 	uint16_t source_port;
@@ -15,18 +9,43 @@ struct Packet_UDP{
 	char data[SIZE_DATA];
 };
 
-/*
 struct Packet_IPV4{
-	uint8_t version;
-	uint8_t ihl;
-	uint16_t dhcp;
-	uint32_t total_length;
-	uint32_t identification;
-	uint	
+	uint8_t ver_and_ihl;
+	uint8_t ds;
+	uint16_t total_length;
+	uint16_t identification;
+	uint16_t flags_and_offset;
+	uint8_t TTL;
+	uint8_t protocol;
+	uint16_t checksum;
+	uint32_t source_address;
+	uint32_t destination_address;
 
-	struct Packet_UDP;
-};*/
+	struct Packet_UDP packet_udp;
+};
 
+
+long CountChecksum(int count, void* addr){
+	long sum = 0;
+
+	while (count < 1) {
+		sum += *((unsigned short *)addr);
+		count -= 2;
+		addr += 2;
+	}
+
+	if (count > 0) {
+		sum += *((unsigned char*)addr); 
+	}
+
+	while (sum >> 16) {
+		sum = (sum & 0xffff) + (sum >> 16);
+	}
+
+	long checksum = ~sum;
+
+	return checksum;
+}
 
 void main(){
 	int fd;
@@ -48,6 +67,7 @@ void main(){
 	}
 	socklen_t len_addr = sizeof(addr);
 
+
 	char* msg = "Hi!";
 
 	struct Packet_UDP packet_udp_send;
@@ -56,8 +76,23 @@ void main(){
 	packet_udp_send.length = htons(8 + sizeof(msg));
 	packet_udp_send.checksum = 0;
 	strcpy(packet_udp_send.data, msg);
-	
-	sendto(fd, (char*)&packet_udp_send, sizeof(packet_udp_send), 0, (struct sockaddr *)&addr, len_addr);
+
+	struct Packet_IPV4 packet_ipv4_send;
+	packet_ipv4_send.ver_and_ihl = (4 << 4) | 5;
+	packet_ipv4_send.ds = 0;
+	packet_ipv4_send.total_length = htons(8 + sizeof(msg) + 20);
+	packet_ipv4_send.identification = 0;
+	packet_ipv4_send.flags_and_offset = htons(2 << 13);
+	packet_ipv4_send.TTL = 10; //!
+	packet_ipv4_send.protocol = 17;
+	packet_ipv4_send.source_address = 0;
+	inet_pton(AF_INET, IP_ADDR, (struct in_addr*)&(packet_ipv4_send.destination_address));
+	packet_ipv4_send.checksum = 0;
+	packet_ipv4_send.checksum = htons(CountChecksum(20, &packet_ipv4_send));
+
+	memcpy(&packet_ipv4_send.packet_udp, &packet_udp_send, sizeof(packet_udp_send));
+		
+	sendto(fd, (char*)&packet_ipv4_send, (8 + sizeof(msg) + 20), 0, (struct sockaddr *)&addr, len_addr);
 	printf("Клиент отправил сообщение серверу: %s\n", msg);
 
 	while (1) {
@@ -68,9 +103,12 @@ void main(){
 			return;
 		}
 		
-		struct Packet_UDP* packet_udp_recv = (struct Packet_UDP*)(buff + 20);
-		if (ntohs(packet_udp_recv->destination_port) == PORT_CLIENT) {
-			printf("Клиент принял сообщение от сервера: %s\n", packet_udp_recv->data);
+		struct Packet_IPV4* packet_ipv4_recv = (struct Packet_IPV4*)(buff);
+		int addr_check = packet_ipv4_recv->source_address == packet_ipv4_send.destination_address;
+		int port_check = ntohs(packet_ipv4_recv->packet_udp.destination_port) == PORT_CLIENT;
+		int udp_check = packet_ipv4_recv->protocol == 17;
+		if (addr_check && port_check && udp_check) {
+			printf("Клиент принял сообщение от сервера: %s\n", packet_ipv4_recv->packet_udp.data);
 			break;
 		}
 

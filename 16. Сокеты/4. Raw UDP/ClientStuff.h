@@ -1,0 +1,5 @@
+#define SIZE_BUFF 64
+#define SIZE_DATA 10
+#define PORT_CLIENT 45289
+#define IP_ADDR "192.168.135.2"
+
