@@ -11,7 +11,7 @@ static void CloseServerHandler(){
 
 	mq_close(serv->mqd_new_clients);
 	mq_close(serv->mqd_messaging);
-	mq_close(serv->mqd_broadcast);
+//	mq_close(serv->mqd_broadcast);
 	mq_close(serv->mqd_exit);
 
 	FreeListMsg(serv->list_msgs);
