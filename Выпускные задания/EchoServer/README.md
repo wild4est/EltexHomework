@@ -1,4 +1,4 @@
-**Общее**
+###Общее
 Сборка сервера и клиента
 ```bash
 make all
@@ -20,7 +20,7 @@ sudo ./server_main 1234 0.0.0.0
 sudo ./client_main 1234 1234 0.0.0.0 0.0.0.0
 ```
 
-**Сервер**
+##Сервер
 Сборка сервера
 ```bash
 make compile_server
@@ -31,7 +31,7 @@ make compile_server
 make clean_server
 ```
 
-**Клиент**
+##Клиент
 Сборка клиента
 ```bash
 make compile_client
