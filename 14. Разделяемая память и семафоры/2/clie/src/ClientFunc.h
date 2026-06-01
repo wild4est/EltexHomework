@@ -19,7 +19,8 @@
 
 /*!
  * \brief Структура разделяемой памяти, эмулирующая поведение очереди, состоящей
- * из одного сообщения \param int shm - файловый дескриптор разделяемой памяти
+ * из одного сообщения
+ * \param int shm - файловый дескриптор разделяемой памяти
  * \param void* ptr - указатель на область разделяемой памяти
  * \param sem_t* sem_read - семафор на чтение разделяемой памяти
  * \param sem_t* sem_write - семафор на запись разделяемой памяти
@@ -35,12 +36,13 @@ struct SharedMemory {
  * \brief Структура клиента
  * \param char* name - имя клиента
  * \param struct SharedMemory shared_mem_messaging - структура разделяемой
- * памяти для отправки сообщений \param struct SharedMemory shared_mem_personal
- * - структура разделяемой памяти для получения индивидуальных сообщений \param
- * struct SharedMemory shared_mem_exit - структура разделяемой памяти для
- * отправки сообщений о выходе \param struct List* list_clients - указатель на
- * список имён пользователей \param struct List* list_msg - указатель на список
- * последних сообщений
+ * памяти для отправки сообщений
+ * \param struct SharedMemory shared_mem_personal - структура разделяемой
+ * памяти для получения индивидуальных сообщений
+ * \param struct SharedMemory shared_mem_exit - структура разделяемой памяти для
+ * отправки сообщений о выходе
+ * \param struct List* list_clients - указатель на список имён пользователей
+ * \param struct List* list_msg - указатель на список последних сообщений
  */
 struct Client {
 	char* name;
@@ -87,17 +89,19 @@ struct Client* InitClient(char* name);
 /*!
  * \brief Функция отправки сообщения серверу
  * \param struct SharedMemory* shared_mem - указатель на структуру разделяемой
- * памяти, по которой необходимо отправить сообщение \param char* name - имя
- * клиета \param char* msg - сообщение
+ * памяти, по которой необходимо отправить сообщение
+ * \param char* name - имя клиета
+ * \param char* msg - сообщение
  */
 int SendMsgToServer(struct SharedMemory* shared_mem, char* name, char* msg);
 
 /*!
  * \brief Функция принятия сообщения от сервера
  * \param struct SharedMemory* shared_mem - указатель на структуру разделяемой
- * памяти, по которой необходиом получить сообщение \param struct List**
- * list_msg - список сообщений \param struct List** list_clients - список
- * клиентов \detail Если принятое сообщение начинается на '+', то клиент
+ * памяти, по которой необходиом получить сообщение
+ * \param struct List** list_msg - список сообщений
+ * \param struct List** list_clients - список клиентов
+ * \detail Если принятое сообщение начинается на '+', то клиент
  * считает, что получил имя только что присоединившего пользователя, и добавляет
  * его в список клиентов. Если принятое сообщение начинается на '-', то клиент
  * считает, что он получил имя пользователя, который покинул чат, и удаляет его

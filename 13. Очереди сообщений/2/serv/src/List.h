@@ -56,14 +56,16 @@ struct ListMsg* InitListMsg();
 /*!
  * \brief Функция, отвечающая за добавление новой вершины в список сообщений
  * \param struct ListMsg* list_msg - указатель на список сообщейни, куда будет
- * добавлена вершина \param char* msg - сообщение
+ * добавлена вершина
+ * \param char* msg - сообщение
  */
 void AddNodeMsg(struct ListMsg* list_msg, char* msg);
 
 /*!
  * \brief Функция, отвечающая за удаление вершины из списка сообщений
  * \param struct ListMsg* list_msg - указатель на список сообщений, откуда будет
- * удалено сообщение \param char* msg - сообщение
+ * удалено сообщение
+ * \param char* msg - сообщение
  */
 void DeleteNodeMsg(struct ListMsg* list_msg, char* msg);
 
@@ -83,15 +85,17 @@ struct ListClient* InitListClient();
 /*!
  * \brief Функция, отвечающая за добавление вершины в список клиентов
  * \param struct ListClient* listclient - указатель на список клиентов, куда
- * будет добавлена вершина \param char* name - имя клиента \param mqd_t mqd -
- * индивидуальная очередь сообщений
+ * будет добавлена вершина
+ * \param char* name - имя клиента
+ * \param mqd_t mqd - индивидуальная очередь сообщений
  */
 void AddNodeClient(struct ListClient* list_client, char* name, mqd_t mqd);
 
 /*!
  * \brief Функция, отвечающая за удаление вершины из списка клиентов
  * \param struct ListCLient list_client - список клиентов, откуда будет удалена
- * вершина \param char* name - имя клиента
+ * вершина
+ * \param char* name - имя клиента
  */
 void DeleteNodeClient(struct ListClient* list_client, char* name);
 

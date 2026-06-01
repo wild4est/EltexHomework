@@ -36,7 +36,8 @@ struct List* InitList();
 /*!
  * \brief Функция, отвечающая за добавление новой вершины в список
  * \param struct List* list - указатель на список, куда будет добавлена новая
- * вершина \param char* data - данные для новой вершины
+ * вершина
+ * \param char* data - данные для новой вершины
  */
 void AddNode(struct List* list, char* data);
 

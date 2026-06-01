@@ -30,10 +30,12 @@ struct Client {
 /*!
  * \brief Функция, отвечающая за инфициализацию структуры клиента
  * \param struct Client* client - указатель на структуру клиента, которая будет
- * инициализирована \param int port_client - порт клиента \param int port_server
- * - порт сервера \param const char* ip_addr_client - ipv4 адрес клиента \param
- * const char* ip_addr_server - ipv4 адрес сервера \return Число, обозначающее
- * успех операции. 0 - всё прошло успешно. -1 - возникла ошибка.
+ * инициализирована
+ * \param int port_client - порт клиента
+ * \param int port_server - порт сервера
+ * \param const char* ip_addr_client - ipv4 адрес клиента
+ * \param const char* ip_addr_server - ipv4 адрес сервера
+ * \return Число, обозначающее успех операции. 0 - всё прошло успешно. -1 - возникла ошибка.
  */
 int InitClient(struct Client* client, int port_client, int port_server,
 	       const char* ip_addr_client, const char* ip_addr_server);
@@ -51,8 +53,8 @@ int SendMsg(struct Client* client, char* msg);
  * \brief Функция принятие сообщений
  * \param struct Client* client - указатель на структуру клиента
  * \return Число, обозначающее успех операции. 0 - всё прошло успешно. -1 -
- * возникла ошибка. 1 - сервер прислал сообщение о завершении работы. \detail
- * Полученное сообщение будет добавлено в список сообщений (sturct List*
+ * возникла ошибка. 1 - сервер прислал сообщение о завершении работы.
+ * \detail Полученное сообщение будет добавлено в список сообщений (sturct List*
  * list_msg) в структуре клиента
  */
 int GetMsg(struct Client* client);

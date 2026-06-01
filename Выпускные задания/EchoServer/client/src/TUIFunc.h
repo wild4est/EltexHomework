@@ -22,11 +22,12 @@ void InitNcursesStuff();
 
 /*!
  * \brief Функция, отвечающая за инициализацию рабочего простраства и
- * отображения всех окон \param struct Workspace* worpspace - рабочее
- * пространство \param int h - высота рабочего пространства \param int w -
- * ширина рабочего пространства \param int y - расположение рабочего
- * пространства по координате y \param int x - расположение рабочего
- * пространства по координате x
+ * отображения всех окон
+ * \param struct Workspace* worpspace - рабочее пространство
+ * \param int h - высота рабочего пространства
+ * \param int w - ширина рабочего пространства
+ * \param int y - расположение рабочего пространства по координате y
+ * \param int x - расположение рабочего пространства по координате x
  */
 void InitWorkspace(struct Workspace* workspace, int h, int w, int y, int x);
 

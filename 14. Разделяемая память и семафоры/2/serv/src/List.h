@@ -99,14 +99,16 @@ struct ListMsg* InitListMsg();
 /*!
  * \brief Функция добавления вершины в список сообщений
  * \param struct ListMsg* list_msg - указатель на список сообщений, куда будет
- * добавлена вершина \param char* msg - сообщение, которое необходимо добавить
+ * добавлена вершина
+ * \param char* msg - сообщение, которое необходимо добавить
  */
 void AddNodeMsg(struct ListMsg* list_msg, char* msg);
 
 /*!
  * \brief Функция удаления вершины из списка сообщений
  * \param struct ListMsg* list_msg - указатель на список сообщений, откуда будет
- * удалена вершина \param char* msg - сообщение, которое будет удалено
+ * удалена вершина
+ * \param char* msg - сообщение, которое будет удалено
  */
 void DeleteNodeMsg(struct ListMsg* list_msg, char* msg);
 
@@ -125,7 +127,9 @@ struct ListClient* InitListClient();
 /*!
  * \brief Функция добавления новой вершины в список клиентов
  * \param struct ListClient* list_client - список клиентов, куда будет добавлена
- * вершина \param char* name - имя клиента \param struct SharedMemory shared_mem
+ * вершина
+ * \param char* name - имя клиента
+ * \param struct SharedMemory shared_mem
  * - структура индивидуальной разделяемой памяти для клиента
  */
 void AddNodeClient(struct ListClient* list_client, char* name,
@@ -134,7 +138,8 @@ void AddNodeClient(struct ListClient* list_client, char* name,
 /*!
  * \brief Функция удаления вершины из списка клиентов
  * \param struct ListClient* list_client - список клиетов, откуда будет удалена
- * вершина \param char* name - имя клиента, который будет удалён
+ * вершина
+ * \param char* name - имя клиента, который будет удалён
  */
 void DeleteNodeClient(struct ListClient* list_client, char* name);
 

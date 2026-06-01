@@ -38,7 +38,8 @@ struct List* InitList();
 /*!
  * \brief Функция инициализации клиента
  * \param struct Client* client - указатель на структуру клиента, которая будет
- * инициализирована \param struct sockaddr_in* addr - указатель на структуру
+ * инициализирована
+ * \param struct sockaddr_in* addr - указатель на структуру
  * адресса клиента
  */
 void InitClient(struct Client* client, struct sockaddr_in* addr);
@@ -62,7 +63,8 @@ void AddNode(struct List* list, struct Client* client);
  * \brief Функция, отвечающая за поиск клиента по адресу
  * \param struct List* list - указатель на список, где будет производится поиск
  * \param struct sockaddr_in* new_addr - указатель адрес клиента, по которому
- * его будут искать \return В случае, если клиент был найден вернётся указатель
+ * его будут искать
+ * \return В случае, если клиент был найден вернётся указатель
  * на его структуру. В ином случае возвращается NULL
  */
 struct Client* SearchClient(struct List* list, struct sockaddr_in* new_addr);
