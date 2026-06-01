@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -9,7 +11,7 @@
 #define SIZE_DATA 255
 
 /*!
- * \brief Структура пакета UDP на траспортном уровене
+ * \brief Структура пакета UDP (траспортный уровень)
  */
 struct Packet_UDP{
 	uint16_t source_port;
@@ -20,7 +22,7 @@ struct Packet_UDP{
 };
 
 /*!
- * \brief Струтура пакета UDP на сетевом уровне
+ * \brief Струтура пакета UDP (сетевой уровнь)
  */
 struct Packet_IPV4{
 	uint8_t ver_and_ihl;
@@ -61,6 +63,16 @@ void FillPacketIPV4(struct Packet_IPV4* packet_ipv4, uint32_t ip_addr_source, ui
  * \param void* addr - указатель на структуру пакета
  */
 long CountChecksum(int count, void* addr);
+
+/*!
+ * \brief Функция, проверяющая совпадение адрессов и портов
+ * \param uint32_t source_address - адрес отправителя
+ * \param uint16_t source_port - порт отправителя
+ * \param uint32_t destination_address - адрес получателя
+ * \param uint16_t destination_port - адрес получателя
+ * \return Число, обозначающее успех проверки. 1 - если порты и адреса совпадают. 0 - если порты и адреса не совпадают.
+ */
+int PortAndAddrCheck(uint32_t source_address, uint16_t source_port, uint32_t destination_address, uint16_t destination_port);
 
 /*!
  * \brief Функция, проверяющая, что поступивший пакет ipv4 действительно пришёл по нужному адресу

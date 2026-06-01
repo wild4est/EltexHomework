@@ -31,3 +31,15 @@ void DeleteFirstMsg(struct List* list){
 	return;
 
 }
+
+
+void FreeList(struct List* list){
+	struct Node* cur_node = list->start;
+	while(cur_node != NULL){
+		struct Node* delete_node = cur_node;
+		cur_node = cur_node->next;
+		free(delete_node);
+	}
+	free(list);
+
+}

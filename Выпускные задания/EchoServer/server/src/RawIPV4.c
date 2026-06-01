@@ -49,6 +49,17 @@ long CountChecksum(int count, void* addr){
 	return checksum;
 }
 
+int PortAndAddrCheck(uint32_t source_address, uint16_t source_port, uint32_t destination_address, uint16_t destination_port){
+	int addr_check = source_address == destination_address;
+	int port_check = source_port == destination_port;
+	
+	if (addr_check && port_check) {
+		return 1;
+	}else{
+		return 0;
+	}
+
+}
 
 int PacketIPV4Check(struct Packet_IPV4* packet_ipv4, uint32_t source_address, uint16_t source_port){
 	int addr_check = source_address == packet_ipv4->destination_address;

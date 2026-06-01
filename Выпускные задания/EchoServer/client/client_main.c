@@ -1,48 +1,57 @@
-/*#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <string.h>
-#include <arpa/inet.h>
+#include <locale.h>
+#include <signal.h>
 
-#define SIZE_BUFF 20
-#define PORT 49134
-#define IP_ADDR "127.0.0.1"
-*/
-
+#include "src/List.h"
 #include "src/TUIFunc.h"
 #include "src/ClientFunc.h"
 
-void main(int argc, char** argv){
-	if (argc < 5) {
-		printf("Не хаватае адресов и/или портов формата <client_addr> <server_addr> <client_port> <server_port>\n");
-		printf("Пример: sudo ./client_main 12345 12345 0.0.0.0 0.0.0.0\n");
-		return;
-	}
-	
-	int client_port = atoi(argv[1]);
-	int server_port = atoi(argv[2]);
-	
-	char client_addr[15];
-	char server_addr[15];
-	
-	strcpy(client_addr, argv[3]);
-	strcpy(server_addr, argv[4]);
-	
-	printf("%s\n", client_addr);
-	printf("%s\n", server_addr);
+void OnExit(int, void* args){
+	endwin();
+	struct Client* client = (struct Client*) args;
+	SendMsg(client, EXIT_CODE);
+	FreeClient(client);
+	printf("Клиент завершил работу\n");
+}
 
-	struct Client client;
-	int recv_init =  InitClient(&client, client_port, server_port, client_addr, server_addr);
-	if (recv_init == -1) {
-		printf("Есть вероятность, что вы запустили без sudo\n");
+static void CloseClientHandler(){
+	exit(EXIT_SUCCESS);
+}
+
+void InitSignalProcessing(){
+        struct sigaction act;
+	act.sa_handler = CloseClientHandler;
+        sigaction(SIGINT, &act, NULL);
+}
+
+void main(int argc, char** argv){
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	if (argc < 5) {
 		return;
 	}
+
+	int port_client = atoi(argv[1]);
+	int port_server = atoi(argv[2]);
+
+	char ip_addr_client[15];
+	char ip_addr_server[15];
+
+	strcpy(ip_addr_client, argv[3]);
+	strcpy(ip_addr_server, argv[4]);
+
+	static struct Client client;
+	int recv = InitClient(&client, port_client, port_server, ip_addr_client, ip_addr_server);
+	if ( recv == -1) {
+		return;
+	}
+
+	InitSignalProcessing();	
+	on_exit(OnExit, &client);
 
 	struct Workspace workspace;
-	InitWorkspace(&workspace, 22, 30, 1, 1);
+	InitWorkspace(&workspace, 22, 50, 1, 1);
 
-	StartWorkspace(&client, &workspace);
-
+	int recv_start_ws = StartWorkspace(&client, &workspace);
+	if (recv_start_ws == -1) {
+		printf("Сервер сообщил о завершении работы. Вас отключило\n");
+	}	
 }
