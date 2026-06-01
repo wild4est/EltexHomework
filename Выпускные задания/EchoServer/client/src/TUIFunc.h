@@ -1,16 +1,16 @@
+#include <errno.h>
+#include <malloc.h>
+#include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ncurses.h>
-#include <malloc.h>
-#include <errno.h>
 
-#include "List.h"
 #include "ClientFunc.h"
+#include "List.h"
 
 /*!
  * \brief Структура рабочего простраства
  */
-struct Workspace{
+struct Workspace {
 	WINDOW* win_msg;
 	WINDOW* win_text;
 };
@@ -21,12 +21,12 @@ struct Workspace{
 void InitNcursesStuff();
 
 /*!
- * \brief Функция, отвечающая за инициализацию рабочего простраства и отображения всех окон
- * \param struct Workspace* worpspace - рабочее пространство
- * \param int h - высота рабочего пространства
- * \param int w - ширина рабочего пространства
- * \param int y - расположение рабочего пространства по координате y
- * \param int x - расположение рабочего пространства по координате x
+ * \brief Функция, отвечающая за инициализацию рабочего простраства и
+ * отображения всех окон \param struct Workspace* worpspace - рабочее
+ * пространство \param int h - высота рабочего пространства \param int w -
+ * ширина рабочего пространства \param int y - расположение рабочего
+ * пространства по координате y \param int x - расположение рабочего
+ * пространства по координате x
  */
 void InitWorkspace(struct Workspace* workspace, int h, int w, int y, int x);
 
@@ -39,13 +39,15 @@ void PrintMsgs(WINDOW* win, struct List* list_msg);
 
 /*!
  * \brief Функция, отвечающая за обноваление окон в рабочем пространстве
- * \param struct Workpace* workspace - рабочее простраство, окна которого будут обновлены
+ * \param struct Workpace* workspace - рабочее простраство, окна которого будут
+ * обновлены
  */
 void RefreshAllWin(struct Workspace* workspace);
 
 /*!
  * \brief Функция, которая запускает процесс принятия и отправки сообщений
  * \param struct Client* client - указатель на структуру клиента
- * \param struct Workspace* workspace - указатель на структуру рабочего простраства
+ * \param struct Workspace* workspace - указатель на структуру рабочего
+ * простраства
  */
 int StartWorkspace(struct Client* client, struct Workspace* workspace);

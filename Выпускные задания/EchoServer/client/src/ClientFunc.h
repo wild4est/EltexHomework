@@ -1,24 +1,25 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <string.h>
 #include <arpa/inet.h>
 #include <errno.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
-#include "RawIPV4.h"
 #include "List.h"
+#include "RawIPV4.h"
 
 #define EXIT_CODE "exit"
 #define SIZE_MSG_SEND 245
 
 /*!
- * \brief Структура клиента. Здесь хранится всё, связанное с backend составляющей.
+ * \brief Структура клиента. Здесь хранится всё, связанное с backend
+ * составляющей.
  */
-struct Client{
+struct Client {
 	struct List* list_msg;
 	int fd;
 	struct sockaddr_in addr;
@@ -28,29 +29,31 @@ struct Client{
 
 /*!
  * \brief Функция, отвечающая за инфициализацию структуры клиента
- * \param struct Client* client - указатель на структуру клиента, которая будет инициализирована
- * \param int port_client - порт клиента
- * \param int port_server - порт сервера
- * \param const char* ip_addr_client - ipv4 адрес клиента
- * \param const char* ip_addr_server - ipv4 адрес сервера
- * \return Число, обозначающее успех операции. 0 - всё прошло успешно. -1 - возникла ошибка.
+ * \param struct Client* client - указатель на структуру клиента, которая будет
+ * инициализирована \param int port_client - порт клиента \param int port_server
+ * - порт сервера \param const char* ip_addr_client - ipv4 адрес клиента \param
+ * const char* ip_addr_server - ipv4 адрес сервера \return Число, обозначающее
+ * успех операции. 0 - всё прошло успешно. -1 - возникла ошибка.
  */
-int InitClient(struct Client* client, int port_client, int port_server, const char* ip_addr_client, const char* ip_addr_server);
+int InitClient(struct Client* client, int port_client, int port_server,
+	       const char* ip_addr_client, const char* ip_addr_server);
 
 /*!
  * \brief Функция отправки сообщений
  * \param struct Client* client - указатель на структуру клиента
  * \param char* msg - сообщение, которое необходимо отправить
- * \return Число, обозначающее успех операции. 0 - всё прошло успешно. -1 - возникла ошибка.
+ * \return Число, обозначающее успех операции. 0 - всё прошло успешно. -1 -
+ * возникла ошибка.
  */
 int SendMsg(struct Client* client, char* msg);
 
 /*!
  * \brief Функция принятие сообщений
  * \param struct Client* client - указатель на структуру клиента
- * \return Число, обозначающее успех операции. 0 - всё прошло успешно. -1 - возникла ошибка. 1 - сервер прислал
- * сообщение о завершении работы.
- * \detail Полученное сообщение будет добавлено в список сообщений (sturct List* list_msg) в структуре клиента
+ * \return Число, обозначающее успех операции. 0 - всё прошло успешно. -1 -
+ * возникла ошибка. 1 - сервер прислал сообщение о завершении работы. \detail
+ * Полученное сообщение будет добавлено в список сообщений (sturct List*
+ * list_msg) в структуре клиента
  */
 int GetMsg(struct Client* client);
 
@@ -63,6 +66,7 @@ int IsItExitMsg(char* msg);
 
 /*!
  * \brief Функция, отвечающая за удаление структуры клиента
- * \param struct Client* client - указатель на структуру клиента, которая будет удалена
+ * \param struct Client* client - указатель на структуру клиента, которая будет
+ * удалена
  */
 void FreeClient(struct Client* client);

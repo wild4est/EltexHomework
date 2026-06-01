@@ -1,16 +1,16 @@
 #pragma once
 
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <netinet/in.h>
 
 #define SIZE_BUFF 255
 
 /*!
  * \brief Структура вершины списка
  */
-struct Node{
+struct Node {
 	char msg[SIZE_BUFF];
 	struct Node* next;
 };
@@ -18,7 +18,7 @@ struct Node{
 /*!
  * \brief Структура списка
  */
-struct List{
+struct List {
 	int length;
 	int max_length;
 	struct Node* start;
@@ -49,4 +49,4 @@ void DeleteFirstMsg(struct List* list);
  * \param struct List* list - список, который будет удалён
  */
 void FreeList(struct List* list);
-//void DeleteNodeById(struct List* list, int id);
+// void DeleteNodeById(struct List* list, int id);

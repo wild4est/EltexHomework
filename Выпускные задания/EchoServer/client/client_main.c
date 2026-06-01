@@ -1,29 +1,27 @@
 #include <locale.h>
 #include <signal.h>
 
+#include "src/ClientFunc.h"
 #include "src/List.h"
 #include "src/TUIFunc.h"
-#include "src/ClientFunc.h"
 
-void OnExit(int, void* args){
+void OnExit(int, void* args) {
 	endwin();
-	struct Client* client = (struct Client*) args;
+	struct Client* client = (struct Client*)args;
 	SendMsg(client, EXIT_CODE);
 	FreeClient(client);
 	printf("Клиент завершил работу\n");
 }
 
-static void CloseClientHandler(){
-	exit(EXIT_SUCCESS);
-}
+static void CloseClientHandler() { exit(EXIT_SUCCESS); }
 
-void InitSignalProcessing(){
-        struct sigaction act;
+void InitSignalProcessing() {
+	struct sigaction act;
 	act.sa_handler = CloseClientHandler;
-        sigaction(SIGINT, &act, NULL);
+	sigaction(SIGINT, &act, NULL);
 }
 
-void main(int argc, char** argv){
+void main(int argc, char** argv) {
 	setlocale(LC_ALL, "ru_RU.UTF-8");
 	if (argc < 5) {
 		return;
@@ -39,12 +37,13 @@ void main(int argc, char** argv){
 	strcpy(ip_addr_server, argv[4]);
 
 	static struct Client client;
-	int recv = InitClient(&client, port_client, port_server, ip_addr_client, ip_addr_server);
-	if ( recv == -1) {
+	int recv = InitClient(&client, port_client, port_server, ip_addr_client,
+			      ip_addr_server);
+	if (recv == -1) {
 		return;
 	}
 
-	InitSignalProcessing();	
+	InitSignalProcessing();
 	on_exit(OnExit, &client);
 
 	struct Workspace workspace;
@@ -53,5 +52,5 @@ void main(int argc, char** argv){
 	int recv_start_ws = StartWorkspace(&client, &workspace);
 	if (recv_start_ws == -1) {
 		printf("Сервер сообщил о завершении работы. Вас отключило\n");
-	}	
+	}
 }
