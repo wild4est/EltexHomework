@@ -1,8 +1,8 @@
 #pragma once
 
+#include <errno.h>
 #include <malloc.h>
 #include <ncurses.h>
-#include <errno.h>
 #include <stdio.h>
 
 #include "ClientFunc.h"
@@ -24,10 +24,10 @@
  * \param WINDOW* win_text - окно для ввода сообщения
  * \param WINDOW* win_clients - окно со списком клиентов
  */
-struct Workspace{
-        WINDOW* win_msgs;
-        WINDOW* win_text;
-        WINDOW* win_clients;
+struct Workspace {
+	WINDOW* win_msgs;
+	WINDOW* win_text;
+	WINDOW* win_clients;
 };
 
 /*!
@@ -53,17 +53,18 @@ void RefreshAllWin();
 void PrintList(WINDOW* win, struct List* list);
 
 /*!
- * \brief Функция, прослушивающая сообщения на отправку. Используется при создании соотвествующего потока.
- * \param void* args - указатель на структуру клиента
- * \detail Функция ждёт пока пользователь не введёт вообщение в окне win_text. После получения сообщения отправляет
- * его серверу
+ * \brief Функция, прослушивающая сообщения на отправку. Используется при
+ * создании соотвествующего потока. \param void* args - указатель на структуру
+ * клиента \detail Функция ждёт пока пользователь не введёт вообщение в окне
+ * win_text. После получения сообщения отправляет его серверу
  */
 void* MessagingListener(void* args);
 
 /*!
- * \brief Функция, прослушивающая сообщения от сервера. Используется при создании соотвествующего потока.
- * \param void* args - указатель на структуру клиента
- * \detail Функция ждёт пока не поуступит сообщение от сервера и обрабатывает его.
+ * \brief Функция, прослушивающая сообщения от сервера. Используется при
+ * создании соотвествующего потока. \param void* args - указатель на структуру
+ * клиента \detail Функция ждёт пока не поуступит сообщение от сервера и
+ * обрабатывает его.
  */
 void* BroadcastListener(void* args);
 

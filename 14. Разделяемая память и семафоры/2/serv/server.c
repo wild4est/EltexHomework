@@ -1,19 +1,22 @@
 #include <signal.h>
+
 #include "src/ServerFunc.h"
 
 struct Server* serv = NULL;
 
-static void CloseServerHandler(){
-        if (serv == NULL) {
-                printf("[X] CloseClientHandler: структура клиента равна NULL\n");
-                return;
-        }
+static void CloseServerHandler() {
+	if (serv == NULL) {
+		printf(
+		    "[X] CloseClientHandler: структура клиента равна NULL\n");
+		return;
+	}
 
 	CloseSharedMemory(&(serv->shared_mem_new_client));
 	CloseSharedMemory(&(serv->shared_mem_messaging));
 	CloseSharedMemory(&(serv->shared_mem_exit));
 
-	UnlinkSharedMemory(SHM_NEW_CLIENT, SEM_NEW_CLIENT_RD, SEM_NEW_CLIENT_WR);
+	UnlinkSharedMemory(SHM_NEW_CLIENT, SEM_NEW_CLIENT_RD,
+			   SEM_NEW_CLIENT_WR);
 	UnlinkSharedMemory(SHM_MESSAGING, SEM_MESSAGING_RD, SEM_MESSAGING_WR);
 	UnlinkSharedMemory(SHM_EXIT, SEM_EXIT_RD, SEM_EXIT_WR);
 
@@ -24,15 +27,13 @@ static void CloseServerHandler(){
 	exit(EXIT_SUCCESS);
 }
 
-void InitSignalProcessing(){
-        struct sigaction act;
-        act.sa_handler = CloseServerHandler;
-        sigaction(SIGINT, &act, NULL);
+void InitSignalProcessing() {
+	struct sigaction act;
+	act.sa_handler = CloseServerHandler;
+	sigaction(SIGINT, &act, NULL);
 }
 
-
-
-void main(){
+void main() {
 	serv = InitServer();
 	InitSignalProcessing();
 
@@ -47,6 +48,5 @@ void main(){
 	pthread_join(thread_for_new_client, NULL);
 	pthread_join(thread_messaging, NULL);
 	pthread_join(thread_exit, NULL);
-
 }
 

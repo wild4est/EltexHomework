@@ -1,9 +1,10 @@
 #pragma once
 
-#include <stdio.h>
 #include <malloc.h>
-#include <string.h>
 #include <mqueue.h>
+#include <stdio.h>
+#include <string.h>
+
 #include "../../ServerStuff.h"
 
 /*!
@@ -11,7 +12,7 @@
  * \param char data[SIZE_BUFF_MSG] - данные
  * \param struct Node* next - указатель на следующую вершину
  */
-struct Node{
+struct Node {
 	char data[SIZE_BUFF_MSG];
 	struct Node* next;
 };
@@ -21,21 +22,21 @@ struct Node{
  * \param int length - текущий размер списка
  * \param struct Node* start - указатель на начало списка
  */
-struct List{
+struct List {
 	int length;
 	struct Node* start;
 };
 
 /*!
  * \brief Функция, отвечающая за инициализацию списка
- * \return Указатель на структуру списка 
+ * \return Указатель на структуру списка
  */
 struct List* InitList();
 
 /*!
  * \brief Функция, отвечающая за добавление новой вершины в список
- * \param struct List* list - указатель на список, куда будет добавлена новая вершина
- * \param char* data - данные для новой вершины
+ * \param struct List* list - указатель на список, куда будет добавлена новая
+ * вершина \param char* data - данные для новой вершины
  */
 void AddNode(struct List* list, char* data);
 

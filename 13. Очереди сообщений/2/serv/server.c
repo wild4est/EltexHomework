@@ -1,17 +1,19 @@
 #include <signal.h>
+
 #include "src/ServerFunc.h"
 
 struct Server* serv = NULL;
 
-static void CloseServerHandler(){
-        if (serv == NULL) {
-                printf("[X] CloseClientHandler: структура клиента равна NULL\n");
-                return;
-        }
+static void CloseServerHandler() {
+	if (serv == NULL) {
+		printf(
+		    "[X] CloseClientHandler: структура клиента равна NULL\n");
+		return;
+	}
 
 	mq_close(serv->mqd_new_clients);
 	mq_close(serv->mqd_messaging);
-//	mq_close(serv->mqd_broadcast);
+	//	mq_close(serv->mqd_broadcast);
 	mq_close(serv->mqd_exit);
 
 	FreeListMsg(serv->list_msgs);
@@ -21,15 +23,13 @@ static void CloseServerHandler(){
 	exit(EXIT_SUCCESS);
 }
 
-void InitSignalProcessing(){
-        struct sigaction act;
-        act.sa_handler = CloseServerHandler;
-        sigaction(SIGINT, &act, NULL);
+void InitSignalProcessing() {
+	struct sigaction act;
+	act.sa_handler = CloseServerHandler;
+	sigaction(SIGINT, &act, NULL);
 }
 
-
-
-void main(){
+void main() {
 	serv = InitServer();
 	InitSignalProcessing();
 
@@ -44,6 +44,5 @@ void main(){
 	pthread_join(thread_for_new_client, NULL);
 	pthread_join(thread_messaging, NULL);
 	pthread_join(thread_exit, NULL);
-
 }
 

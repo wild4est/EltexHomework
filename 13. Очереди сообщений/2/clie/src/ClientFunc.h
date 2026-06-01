@@ -1,16 +1,17 @@
 #pragma once
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <errno.h>
 #include <fcntl.h>
-#include <string.h>
-#include <pthread.h>
 #include <mqueue.h>
 #include <ncurses.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
-#include <errno.h> 
-#include "List.h"
+
 #include "../../ServerStuff.h"
+#include "List.h"
 
 #define CLIENT_NAME "Cow"
 #define CLIENT_MSG "Moo"
@@ -26,7 +27,7 @@
  * \param struct List* list_clients - список клиентов
  * \param struct List* list_msgs - список сообщений
  */
-struct Client{
+struct Client {
 	char* name;
 	mqd_t mqd_messaging;
 	mqd_t mqd_personal;
@@ -43,7 +44,8 @@ struct Client{
  * \param long mssize - размер сообщения
  * \param oflag - флаги
  */
-int InitQueue(mqd_t* mqd, const char* path, long maxmsg, long msgsize, int oflag);
+int InitQueue(mqd_t* mqd, const char* path, long maxmsg, long msgsize,
+	      int oflag);
 
 /*!
  * \brief Функция, отвечающая за инициализанию структуру клиента
@@ -65,15 +67,18 @@ int SendMsgToServer(mqd_t mqd_messaging, char* name, char* msg);
  * \param mqd_t mqd_personal - очередь, по которой будут приниматься сообщения
  * \param struct List** list_msg - указатель на список сообщений
  * \param struct List** list_clients - указатель на список клиентов
- * \detail Если принятое сообщение начинается на '+', то клиент считает, что получил имя только что присоединившего
- * пользователя, и добавляет его в список клиентов. Если принятое сообщение начинается на '-', то клиент считает,
- * что он получил имя пользователя, который покинул чат, и удаляет его из списка клиентов. Во всех остальных случаях
- * клиент считает, что он получил обычное сообщение и записывает его в список сообщений.
+ * \detail Если принятое сообщение начинается на '+', то клиент считает, что
+ * получил имя только что присоединившего пользователя, и добавляет его в список
+ * клиентов. Если принятое сообщение начинается на '-', то клиент считает, что
+ * он получил имя пользователя, который покинул чат, и удаляет его из списка
+ * клиентов. Во всех остальных случаях клиент считает, что он получил обычное
+ * сообщение и записывает его в список сообщений.
  */
-int GetMsgFromServer(mqd_t mqd_personal, struct List** list_msgs, struct List** list_clients);
+int GetMsgFromServer(mqd_t mqd_personal, struct List** list_msgs,
+		     struct List** list_clients);
 
 /*!
- * \brief Функция, отвечающая за получение данных о пользователях и сообщениях от сервера
- * \param struct Client* client - указатель на структуру клиента
+ * \brief Функция, отвечающая за получение данных о пользователях и сообщениях
+ * от сервера \param struct Client* client - указатель на структуру клиента
  */
 int GetDataFromServer(struct Client* client);

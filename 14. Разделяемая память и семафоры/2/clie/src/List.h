@@ -1,8 +1,9 @@
 #pragma once
 
-#include <stdio.h>
 #include <malloc.h>
+#include <stdio.h>
 #include <string.h>
+
 #include "../../ServerStuff.h"
 
 /*!
@@ -10,7 +11,7 @@
  * \param char data[SIZE_BUFF_MSG] - данные
  * \param struct Node* next - указатель на следующую структуру
  */
-struct Node{
+struct Node {
 	char data[SIZE_BUFF_MSG];
 	struct Node* next;
 };
@@ -20,7 +21,7 @@ struct Node{
  * \param int length - текущая длина списка
  * \param sturct Node* start - указатель на начало списка
  */
-struct List{
+struct List {
 	int length;
 	struct Node* start;
 };
@@ -41,7 +42,7 @@ void AddNode(struct List* list, char* data);
 /*!
  * \brief Функция, отвечающая за удаление вершины
  * \param struct List* list - указатель на список, откуда будет удалена вершина
- * \param char* data - данные, по которым будет искаться вершина 
+ * \param char* data - данные, по которым будет искаться вершина
  */
 void DeleteNode(struct List* list, char* data);
 
