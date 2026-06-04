@@ -23,7 +23,4 @@ obj/server_main.o: server_main.c
 
 clean:
 	rm -rf ../server_main obj/*.o obj
-	rm -f run_test
 
-run_test:
-	$(CC) test/PointerFunc_test.c src/PointerFunc.c ../Unity/unity.c -o run_test
