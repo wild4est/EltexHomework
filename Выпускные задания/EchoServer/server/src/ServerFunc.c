@@ -14,6 +14,7 @@ int InitServer(struct Server* server, int port, const char* ip_addr) {
 	server->fd = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
 	if (server->fd < 0) {
 		printf("[X] Не удалось создать файловый дескрипор\n");
+		printf("Сервер запущен без прав sudo\n");
 		return -1;
 	}
 	int opt = 1;

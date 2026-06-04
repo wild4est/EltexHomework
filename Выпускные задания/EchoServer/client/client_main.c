@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <locale.h>
 #include <signal.h>
 
@@ -21,9 +22,32 @@ void InitSignalProcessing() {
 	sigaction(SIGINT, &act, NULL);
 }
 
+int StringIsNumberCheck(char* str, size_t len) {
+	for (int i = 0; i < len; i++) {
+		if (!isdigit(str[i])) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
 void main(int argc, char** argv) {
 	setlocale(LC_ALL, "ru_RU.UTF-8");
 	if (argc < 5) {
+		printf(
+		    "Во время запуска клиента ему необходимо задать порт и "
+		    "сетевой адрес, а так же указать порт и адрес сервера\n");
+		printf(
+		    " ./client_main <порт клиента> <порт сервера> <сетевой "
+		    "адрес клиента> <сетевой адрес сервера>\n");
+		printf(
+		    "Пример: sudo ./client_main 1234 1234 0.0.0.0 0.0.0.0\n");
+		return;
+	}
+
+	if (!StringIsNumberCheck(argv[1], strlen(argv[1])) ||
+	    !StringIsNumberCheck(argv[2], strlen(argv[2]))) {
+		printf("Один из указанных портов не является коректным\n");
 		return;
 	}
 

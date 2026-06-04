@@ -5,6 +5,7 @@ int InitClient(struct Client* client, int port_client, int port_server,
 	if ((client->fd = socket(AF_INET, SOCK_RAW, IPPROTO_UDP)) < 0) {
 		int err = errno;
 		printf("Не удалось создать файловый дескриптор %d\n", err);
+		printf("Клиент запущен без прав sudo\n");
 		return -1;
 	}
 	int opt = 1;

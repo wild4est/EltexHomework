@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <locale.h>
 #include <pthread.h>
 #include <signal.h>
@@ -18,10 +19,25 @@ void InitSignalProcessing() {
 	sigaction(SIGINT, &act, NULL);
 }
 
+int StringIsNumberCheck(char* str, size_t len) {
+	for (int i = 0; i < len; i++) {
+		if (!isdigit(str[i])) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
 void main(int argc, char* argv[]) {
 	if (argc != 3) {
 		printf("Для запуска сервера необходимо ввести порт и адрес\n");
-		printf("./main_server 1234 0.0.0.0\n");
+		printf(" ./server_main <порт сервера> <адрес сервера>\n");
+		printf("Пример: sudo ./server_main 1234 0.0.0.0\n");
+		return;
+	}
+
+	if (!StringIsNumberCheck(argv[1], strlen(argv[1]))) {
+		printf("Указанный порт не является коректным\n");
 		return;
 	}
 
