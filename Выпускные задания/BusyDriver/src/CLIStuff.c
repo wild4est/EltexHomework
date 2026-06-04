@@ -76,7 +76,7 @@ void PrintGreeting() {
 	printf("\n");
 }
 
-int WordIsNumberCheck(char* str, int len) {
+int WordIsNumberCheck(char* str, size_t len) {
 	for (int i = 0; i < len; i++) {
 		if (!isdigit(str[i])) {
 			return 0;

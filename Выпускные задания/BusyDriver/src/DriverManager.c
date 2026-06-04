@@ -18,9 +18,9 @@ void InitDriver(struct Driver** driver) {
 			printf("\e[31m[!]\e[0m Error: ClosePairForChild\n");
 			exit(EXIT_FAILURE);
 		}
+		InitSignalProcessing();
 
 		while (1) {
-			InitSignalProcessing();
 			char msg[SIZE_BUFF];
 			int recv_getmsg = GetMsg(
 			    (*driver)->pair_of_pipes.pipe_from_parent, msg);
@@ -198,7 +198,7 @@ int SendTask(pid_t pid, char* task_timer) {
 	}
 	if (strcmp(msg, BUSY_MSG) == 0) {
 		printf("Водитель<%d> в данный момент времени занят\n", pid);
-		return 1;
+		return STATUS_BUSY;
 	} else {
 		printf("Водитель<%d> свободен\n", pid);
 	}
