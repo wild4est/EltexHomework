@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/time.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -18,8 +19,8 @@
 #define BUSY_MSG "busy"
 #define FREE_MSG "free"
 
-#define STATUS_BUSY 0
-#define STATUS_FREE 1
+#define STATUS_BUSY -2
+#define STATUS_FREE -1
 
 
 /*!
@@ -55,7 +56,8 @@ struct DriverManager {
  *     дочерний процесс на текущем шаге больше ничего не делает. Если статус STATUS_FREE, дочерний процесс меняет статус
  *     на STATUS_BUSY, ожидает от менеджера время и выполняет alarm() с указаным временем. После того, как водитель
  *     поймает SIGALRM, снова поменяет своё состояние на STATUS_FREE.
- *   - GETSTATUS_MSG - запрос статуса. Водитель возвращает свой статус. 
+ *   - GETSTATUS_MSG - запрос статуса. В случае если водитель свободен возвращает STATUS_FREE, в ином случае оставшееся
+ *     время до конца таймреа. 
  */
 void InitDriver(struct Driver** driver);
 
@@ -91,6 +93,8 @@ int CreateDriver();
 /*!
  * \brief Функция, отвечающая за отправку статуса водителя менеджеру
  * \param struct Driver* driver - водитель, чей статус будет посылаться
+ * \detail В случае если свободен, сообщает менеджеру FREE_MSG. В случае ином случае водитель сообщит оставшееся
+ * время до конца таймера.
  */
 void SendStatus(struct Driver* driver);
 
@@ -134,7 +138,7 @@ int GetStatusByPid(pid_t pid);
  * \brief Функция, запрашивающая статус у водителя по его id в массиве
  * \param int id - id водителя, по которому его будут искать
  * \return  В случае если водитель не был найден или на каком-то этапе возникла ошибка, возвращается -1.
- * В ином случае вернётся статус водителя.
+ * В случае если водитель свободен вернётся STATUS_FREE. В ином случае водитель возвращает оставшееся время от таймера.
  */
 int GetStatusById(int id);
 

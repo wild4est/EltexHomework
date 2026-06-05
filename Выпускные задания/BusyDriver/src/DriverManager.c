@@ -78,8 +78,14 @@ void InitSignalProcessing() {
 void SendStatus(struct Driver* driver) {
 	int recv_sendmsg;
 	if (driver->status == STATUS_BUSY) {
-		recv_sendmsg =
-		    SendMsg(driver->pair_of_pipes.pipe_from_child, BUSY_MSG);
+		struct itimerval cur_time;
+
+		getitimer(ITIMER_REAL, &cur_time);
+		char cur_time_str[SIZE_BUFF];
+		sprintf(cur_time_str, "%d", (int)cur_time.it_value.tv_sec);
+
+		recv_sendmsg = SendMsg(driver->pair_of_pipes.pipe_from_child,
+				       cur_time_str);
 		if (recv_sendmsg == -1) {
 			exit(EXIT_FAILURE);
 		}
@@ -122,8 +128,15 @@ void GetDrivers() {
 	for (int i = 0; i < driver_manager->length; i++) {
 		int status = GetStatusById(i);
 		int pid = driver_manager->drivers[i]->pid;
-		printf("Водитель<%d>: %s\n", pid,
-		       ((status == STATUS_BUSY) ? "занят" : "свободен"));
+		printf("Водитедь<%d> ", pid);
+		if (status != STATUS_FREE) {
+			printf("занят (%d)\n", status);
+		} else {
+			printf("свободен\n");
+		}
+
+		// printf("Водитель<%d>: %s\n", pid, ((status == STATUS_BUSY) ?
+		// "занят" : "свободен"));
 	}
 }
 
@@ -196,9 +209,11 @@ int SendTask(pid_t pid, char* task_timer) {
 		printf("\e[31m[!]\e[0m Error: GetTask %d\n", err);
 		return -1;
 	}
-	if (strcmp(msg, BUSY_MSG) == 0) {
-		printf("Водитель<%d> в данный момент времени занят\n", pid);
-		return STATUS_BUSY;
+	if (strcmp(msg, FREE_MSG) != 0) {
+		int cur_time = atoi(msg);
+		printf("Водитель<%d> в данный момент времени занят (%d)\n", pid,
+		       cur_time);
+		return cur_time;
 	} else {
 		printf("Водитель<%d> свободен\n", pid);
 	}
@@ -233,8 +248,9 @@ int GetStatusById(int id) {
 		printf("\e[31m[!]\e[0m Error: GetTask %d\n", err);
 		return -1;
 	}
-	if (strcmp(msg, BUSY_MSG) == 0) {
-		return STATUS_BUSY;
+	if (strcmp(msg, FREE_MSG) != 0) {
+		int cur_time = atoi(msg);
+		return cur_time;
 	}
 	return STATUS_FREE;
 }

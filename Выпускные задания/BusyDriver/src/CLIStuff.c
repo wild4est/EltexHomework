@@ -150,9 +150,16 @@ void MainCLI() {
 			int pid = atoi(words[1]);
 			int status = GetStatusByPid(pid);
 			if (status != -1) {
-				printf("Водитель<%d>: %s\n", pid,
-				       ((status == STATUS_BUSY) ? "занят"
-								: "свободен"));
+				printf("Водитедь<%d> ", pid);
+				if (status != STATUS_FREE) {
+					printf("занят (%d)\n", status);
+				} else {
+					printf("свободен\n");
+				}
+
+				// printf("Водитель<%d>: %s\n", pid, ((status !=
+				// STATUS_FREE) ? "занят"
+				// : "свободен"));
 			}
 		} else if (strcmp(words[0], "get_drivers") == 0) {
 			GetDrivers();
